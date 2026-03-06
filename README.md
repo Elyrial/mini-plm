@@ -27,12 +27,13 @@ The current commands are:
 - show
 - list
 - history
+- serve
 - help
 
 ### Create an object:
 This command will create an object with an initial lifecycle of "Design".
 
-The path only follows this path (Design -> Prototype -> Production -> Obsolete) 
+The path only follows this path (Design -> Prototype -> Production -> Obsolete)
 This is currently hard coded and will be changed once a better idea comes up.
 ```
 cargo run create "P-1000"
@@ -73,3 +74,24 @@ cargo run show P-1000
 ```
 cargo run history P-1000
 ```
+
+## Web UI
+
+### Host locally
+
+Start the server on the default port (3000):
+```
+cargo run serve
+```
+
+Or specify a custom port:
+```
+cargo run serve --port 8080
+```
+
+Then open your browser at:
+```
+http://localhost:3000
+```
+
+The UI shows all parts in a table. Click a row to expand it and see its change history.
