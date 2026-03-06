@@ -1,13 +1,15 @@
 mod cli;
 mod core;
 mod infra;
+mod web;
 
 use clap::Parser;
 use cli::{Cli, Commands};
-use core::{Lifecycle, PlmError};
+use core::PlmError;
 use infra::JsonRepo;
 
-fn main() -> Result<(), PlmError> {
+#[tokio::main]
+async fn main() -> Result<(), PlmError> {
     let cli = Cli::parse();
 
     // All data is stored in ./data/plm.json
@@ -39,8 +41,10 @@ fn main() -> Result<(), PlmError> {
             let hist = core::app_history(&repo, part)?;
             println!("{}", serde_json::to_string_pretty(&hist).unwrap());
         }
+        Commands::Serve { port } => {
+            web::serve(repo, port).await?;
+        }
     }
 
     Ok(())
 }
-

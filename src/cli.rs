@@ -1,4 +1,4 @@
-use clap::{Parser, Subcommand, ValueEnum};
+use clap::{Parser, Subcommand};
 use crate::core::Lifecycle;
 
 #[derive(Parser, Debug)]
@@ -48,6 +48,13 @@ pub enum Commands {
     History {
         /// Part number
         part: String,
+    },
+
+    /// Start the web UI server
+    Serve {
+        /// Port to listen on
+        #[arg(long, short, default_value_t = 3000)]
+        port: u16,
     },
 }
 
