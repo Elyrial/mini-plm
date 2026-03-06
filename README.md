@@ -1,10 +1,12 @@
-# Mini-PLM system
+# Mini-PLM
 
-## Current Architecture:
-This is currently a hobby project and since im not a big fan of databases, I decided to store the data in a json format.
+A hobby project for managing parts through a lifecycle. Data is stored as JSON.
 
-The part or object currently has this initial structure.
-```
+## Data Structure
+
+Parts and changes are stored as two separate lists:
+
+```json
 {
   "parts": [
     {
@@ -16,82 +18,70 @@ The part or object currently has this initial structure.
 }
 ```
 
-The parts and changes elements are two different lists.
+Lifecycle stages follow a fixed path: **Design → Prototype → Production → Obsolete**
 
+---
 
+## CLI Commands
 
-## How to use:
-The current commands are:
-- create
-- promote
-- show
-- list
-- history
-- serve
-- help
+| Command   | Description                        |
+|-----------|------------------------------------|
+| `create`  | Create a new part                  |
+| `promote` | Advance a part to the next stage   |
+| `show`    | Show a part's current state        |
+| `list`    | List all parts                     |
+| `history` | Show a part's change history       |
+| `serve`   | Start the web UI server            |
+| `help`    | Show help                          |
 
-### Create an object:
-This command will create an object with an initial lifecycle of "Design".
+### Create a part
 
-The path only follows this path (Design -> Prototype -> Production -> Obsolete)
-This is currently hard coded and will be changed once a better idea comes up.
+New parts start in the `Design` stage.
+
 ```
 cargo run create "P-1000"
 ```
 
-### Promote object
-design -> prototype
+### Promote a part
+
 ```
 cargo run promote --eco "EN1234567" --reason "Finished testing" P-1000 prototype
+cargo run promote --eco "EN1234568" --reason "PM approved"      P-1000 production
+cargo run promote --eco "EN1234569" --reason "Reached EOL"      P-1000 obsolete
 ```
 
-prototype -> production
-```
-cargo run promote --eco "EN1234568" --reason "PM approved" P-1000 production
-```
+### List all parts
 
-production -> obsolete
-```
-cargo run promote --eco "EN1234569" --reason "Reached EOL" P-1000 obsolete
-```
-
-### Create another object:
-```
-cargo run create "P-1001"
-```
-
-### List all created objects:
 ```
 cargo run list
 ```
 
-### Show an object:
+### Show a part
+
 ```
 cargo run show P-1000
 ```
 
-### Show the history of an object
+### Show change history
+
 ```
 cargo run history P-1000
 ```
 
+---
+
 ## Web UI
 
-### Host locally
-
 Start the server on the default port (3000):
+
 ```
 cargo run serve
 ```
 
 Or specify a custom port:
+
 ```
 cargo run serve --port 8080
 ```
 
-Then open your browser at:
-```
-http://localhost:3000
-```
-
-The UI shows all parts in a table. Click a row to expand it and see its change history.
+Then open `http://localhost:3000` in your browser. The UI shows all parts in a table — click a row to expand its change history.
