@@ -59,6 +59,35 @@ pub fn app_promote_part(
     Ok(())
 }
 
+pub fn app_change_order(
+    repo: &impl Repo,
+    number: String,
+    eco: String,
+    reason: String,
+) -> Result<(), PlmError> {
+    let mut snap = repo.load()?;
+
+    let part = snap
+        .parts
+        .iter()
+        .find(|p| p.number == number)
+        .ok_or_else(|| PlmError::NotFound(number.clone()))?;
+
+    let lifecycle = part.lifecycle.clone();
+
+    snap.changes.push(Change {
+        part_number: number,
+        eco,
+        from: lifecycle.clone(),
+        to: lifecycle,
+        reason,
+        at_utc: Utc::now(),
+    });
+
+    repo.save(&snap)?;
+    Ok(())
+}
+
 pub fn app_get_part(repo: &impl Repo, number: String) -> Result<Part, PlmError> {
     let snap = repo.load()?;
     snap.parts
