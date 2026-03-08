@@ -27,6 +27,9 @@ async fn main() -> Result<(), PlmError> {
         } => {
             core::app_promote_part(&repo, part, to, eco, reason)?;
         }
+        Commands::ChangeOrder { part, eco, reason } => {
+            core::app_change_order(&repo, part, eco, reason)?;
+        }
         Commands::Show { part } => {
             let p = core::app_get_part(&repo, part)?;
             println!("{}", serde_json::to_string_pretty(&p).unwrap());
