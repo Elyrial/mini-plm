@@ -35,6 +35,20 @@ pub enum Commands {
         reason: String,
     },
 
+    /// Record a change order (ECO) without lifecycle promotion
+    ChangeOrder {
+        /// Part number, e.g. P-1001
+        part: String,
+
+        /// ECO identifier, e.g. ECO-002
+        #[arg(long)]
+        eco: String,
+
+        /// Reason for change
+        #[arg(long)]
+        reason: String,
+    },
+
     /// Show a part as JSON
     Show {
         /// Part number
