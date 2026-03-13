@@ -95,4 +95,4 @@ Or specify a custom port:
 cargo run serve --port 8080
 ```
 
-Then open `http://localhost:3000` in your browser. The UI shows all parts in a table — click a row to expand its change history.
+Then open `http://localhost:3000` in your browser. The UI shows all parts in a table, click a row to expand its change history.
