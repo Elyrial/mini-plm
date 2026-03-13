@@ -18,7 +18,7 @@ Parts and changes are stored as two separate lists:
 }
 ```
 
-Lifecycle stages follow a fixed path: **Design → Prototype → Production → Obsolete**
+Lifecycle stages follow a fixed path: **Design → Prototype → Production → Obsolete** (This is temporary)
 
 ---
 
